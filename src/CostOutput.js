@@ -21,8 +21,9 @@ export default function CostOutput(props) {
                 <Table.HeaderCell>Employee Name</Table.HeaderCell>
                 <Table.HeaderCell>Employee Cost</Table.HeaderCell>
                 <Table.HeaderCell>Dependent Count</Table.HeaderCell>
-                <Table.HeaderCell>Dependnet Cost</Table.HeaderCell>
+                <Table.HeaderCell>Dependent Cost</Table.HeaderCell>
                 <Table.HeaderCell>Total Cost</Table.HeaderCell>
+                <Table.HeaderCell>Employee Take-home</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -32,6 +33,7 @@ export default function CostOutput(props) {
                 <Table.Cell>{props.dependents.length}</Table.Cell>
                 <Table.Cell>${dependentCost}</Table.Cell>
                 <Table.Cell>${props.totalCost}</Table.Cell>
+                <Table.Cell>${props.employeeTakehome}</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>

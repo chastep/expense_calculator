@@ -120,6 +120,7 @@ export default function Calculator() {
         employeeCost={startWithA(employeeName) ? EMPLOYEE_DISCOUNT_COST : EMPLOYEE_COST}
         dependents={dependentNames}
         totalCost={totalCost}
+        employeeTakehome={EMPLOYEE_SALARY - totalCost}
       />
     </div>
   );
