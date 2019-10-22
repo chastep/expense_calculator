@@ -8,12 +8,14 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --open --hot --mode development",
+    // "start": "webpack-dev-server --open --hot --mode development",
+    "start": "node server.js",
     "build": "webpack --mode production",
     "dev": "yarn build && yarn start",
     "heroku-postbuild": "webpack -p"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "semantic-ui-react": "^0.88.1",
