@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Icon, Message } from 'semantic-ui-react'
+import { Header, Message } from 'semantic-ui-react'
 import Calculator from './Calculator';
 import './app.css';
 
@@ -9,9 +9,8 @@ function App() {
       <Header
         className="app-container__header"
         size='huge'
-        icon
+        dividing
       >
-        <Icon name='calculator'/>
         Expense Calculator 5000™️
       </Header>
       <Message

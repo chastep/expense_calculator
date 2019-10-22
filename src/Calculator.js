@@ -14,7 +14,6 @@ const DEPENDENT_DISCOUNT_COST = DEPENDENT_COST - (DEPENDENT_COST * A_LIST_DISCOU
 
 export default function Calculator() {
   const [employeeName, setEmployeeName] = useState('');
-  const [employeeCost, setEmployeeCost] = useState(0);
   const [dependentNames, setDependentNames] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
 
@@ -47,7 +46,6 @@ export default function Calculator() {
 
     if (employeeName !== '') {
       const employeeCost = (startWithA(employeeName) ? EMPLOYEE_DISCOUNT_COST : EMPLOYEE_COST)
-      setEmployeeCost(employeeCost);
       calculatedCost += employeeCost;
     }
     if (dependentCount > 0) {
@@ -119,7 +117,7 @@ export default function Calculator() {
       </Segment.Group>
       <CostOutput
         employee={employeeName}
-        employeeCost={employeeCost}
+        employeeCost={startWithA(employeeName) ? EMPLOYEE_DISCOUNT_COST : EMPLOYEE_COST}
         dependents={dependentNames}
         totalCost={totalCost}
       />

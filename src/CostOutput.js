@@ -2,7 +2,9 @@ import React from 'react';
 import { Header, Segment, Table } from 'semantic-ui-react'
 
 export default function CostOutput(props) {
-  const dependentCost = props.totalCost - props.employeeCost;
+  const name = props.employee ? props.employee : 'INPUT NAME ABOVE';
+  const employeeCost = props.employee ? props.employeeCost : 0;
+  const dependentCost = props.dependents.length === 0 ? 0 : props.totalCost - props.employeeCost;
 
   return(
     <div className="output-container">
@@ -25,8 +27,8 @@ export default function CostOutput(props) {
             </Table.Header>
             <Table.Body>
               <Table.Row>
-                <Table.Cell>{props.employee}</Table.Cell>
-                <Table.Cell>${props.employeeCost}</Table.Cell>
+                <Table.Cell>{name}</Table.Cell>
+                <Table.Cell>${employeeCost}</Table.Cell>
                 <Table.Cell>{props.dependents.length}</Table.Cell>
                 <Table.Cell>${dependentCost}</Table.Cell>
                 <Table.Cell>${props.totalCost}</Table.Cell>
