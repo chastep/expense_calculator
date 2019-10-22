@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Form, Input, Button } from 'semantic-ui-react'
-// import Output from './Output';
+import { Message, Input, Button, Segment, Divider } from 'semantic-ui-react'
+import CostOutput from './CostOutput';
 import './calculator.css';
 
 const EMPLOYEE_PAYCHECK_AMOUNT = 2000;
@@ -12,13 +12,14 @@ const A_LIST_DISCOUNT = 0.1;
 const EMPLOYEE_DISCOUNT_COST = EMPLOYEE_COST - (EMPLOYEE_COST * A_LIST_DISCOUNT);
 const DEPENDENT_DISCOUNT_COST = DEPENDENT_COST - (DEPENDENT_COST * A_LIST_DISCOUNT);
 
-export default function Calculator(props) {
+export default function Calculator() {
   const [employeeName, setEmployeeName] = useState('');
+  const [employeeCost, setEmployeeCost] = useState(0);
   const [dependentNames, setDependentNames] = useState([]);
-  const [cost, setCost] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);
 
   useEffect(() => {
-    setCost(calculateCost());
+    setTotalCost(calculateCost());
   });
 
   const handleEmployeeNameChange = (e) => {
@@ -26,13 +27,8 @@ export default function Calculator(props) {
   }
 
   const addDependent = () => {
-    setDependentNames([
-      ...dependentNames,
-      {
-        id: dependentNames.length,
-        name: ''
-      }
-    ])
+    dependentNames.push('');
+    setDependentNames([...dependentNames])
   }
 
   const removeDependent = (e, i) => {
@@ -41,7 +37,7 @@ export default function Calculator(props) {
   }
 
   const handleDependentNameChange = (e, i) => {
-    dependentNames[i].name = e.target.value
+    dependentNames[i] = e.target.value
     setDependentNames([...dependentNames])
   }
 
@@ -51,11 +47,12 @@ export default function Calculator(props) {
 
     if (employeeName !== '') {
       const employeeCost = (startWithA(employeeName) ? EMPLOYEE_DISCOUNT_COST : EMPLOYEE_COST)
+      setEmployeeCost(employeeCost);
       calculatedCost += employeeCost;
     }
     if (dependentCount > 0) {
-      dependentNames.map(dep => {
-        const dependentCost = (startWithA(dep.name) ? DEPENDENT_DISCOUNT_COST : DEPENDENT_COST)
+      dependentNames.map(depName => {
+        const dependentCost = (startWithA(depName) ? DEPENDENT_DISCOUNT_COST : DEPENDENT_COST)
         calculatedCost += dependentCost;
       })
     }
@@ -69,13 +66,18 @@ export default function Calculator(props) {
 
   return (
     <div className="calc-container">
-      <Header
-        className="calc-container__header"
-        as="h3"
+      <Message>
+        <Message.Header>Please input your name along with your dependents below. A few clarifying points:</Message.Header>
+        <Message.List>
+          <Message.Item>Costs will not appear until you input your email and/or dependent names.</Message.Item>
+          <Message.Item>Certain names get certain discounts! 🎉</Message.Item>
+          <Message.Item>You can add/remove dependents at anytime. Costs will update to reflect changes.</Message.Item>
+        </Message.List>
+      </Message>
+      <Segment
+        basic
+        textAlign='center'
       >
-        Please input your name along with the number/name of dependents below.
-      </Header>
-      <Form>
         <Input
           value={employeeName}
           label="Employee Name"
@@ -83,42 +85,44 @@ export default function Calculator(props) {
           type="text"
           onChange={handleEmployeeNameChange}
         />
+        <Divider horizontal>ADD</Divider>
         <Button
-          type='button'
+          content="Dependent"
+          color='teal'
+          icon='add'
+          labelPosition='left'
           onClick={addDependent}
-        >
-          Add Dependent
-        </Button>
-        {
-          dependentNames.map(dep => {
-            return (
-              <div key={dep.id}>
-                <Input
-                  label="Dependent Name"
-                  placeholder="J. Smith Jr."
-                  value={dep.name}
-                  onChange={(e) => handleDependentNameChange(e, dep.id)}
-                />
-                <Button
-                  type='button'
-                  onClick={(e) => removeDependent(e, dep.id)}
-                >
-                  Remove Dependent
-                </Button>
-              </div>
-            )
-          })
-        }
-      </Form>
-      <div>
-        Employee Name: {employeeName}
-      </div>
-      <div>
-        Dependent Count: {dependentNames.length}
-      </div>
-      <div>
-        Total Cost: {cost}
-      </div>
+        />
+      </Segment>
+      <Segment.Group>
+      {
+        dependentNames.map((depName, i) => {
+          return (
+            <Segment key={i}>
+              <Input
+                label="Dependent Name"
+                placeholder="J. Smith Jr."
+                value={depName}
+                onChange={(e) => handleDependentNameChange(e, i)}
+              />
+              <Button
+                content="Remove"
+                color='red'
+                icon='remove'
+                labelPosition='right'
+                onClick={(e) => removeDependent(e, i)}
+              />
+            </Segment>
+          )
+        })
+      }
+      </Segment.Group>
+      <CostOutput
+        employee={employeeName}
+        employeeCost={employeeCost}
+        dependents={dependentNames}
+        totalCost={totalCost}
+      />
     </div>
   );
 }
