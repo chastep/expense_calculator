@@ -10,7 +10,7 @@ The Expense Calculator 5000™️ (*patient pending*) helps employers determine 
 
 ## Things you'll need to start:
 * node 12.11.1
-* yarn 1.13.0
+* yarn 1.15.2
 
 ### To run locally:
 Clone down, create, and run the below commands:
