@@ -14,7 +14,7 @@
     "heroku-postbuild": "webpack -p"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "semantic-ui-react": "^0.88.1",
